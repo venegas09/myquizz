@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Galderak Gehitu</title>
+	<title>Galdera Gehitu HTML5</title> 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
 	<link rel='stylesheet' type='text/css' href='stylesPWS/styleAddQuestions.css' />
 	<link rel='stylesheet' 
@@ -13,34 +13,13 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='stylesPWS/smartphone.css' />
-	<style>
+	
+	<style>	
 		nav {float: left; width: 15%; height: 550px;}
-	    section {float: right; width: 80%; height: 550px;}	
+	    section {float: right; width: 80%; height: 550px;}
 	</style>
-	<script src=".\javascript\egiaztatu.js"></script>
 	<script type="text/javascript" src=".\javascript\irudiaKargatu.js"></script>
 	<script type="text/javascript" src=".\javascript\irudiaEzabatu.js"></script>
-		<script type="text/javascript">      
-		$(document).ready(function(){          
-			var Element = "#email";          
-			var InputText = "Hizkiak+ 3 digitu + “@ikasle.ehu.” + “eus”/“es”";      
-			$(Element).val(InputText);
-			$(Element).css("color", "grey");             
-			$(Element).bind('focus',function(){     
-				$(this).addClass('focus');
-				$(Element).css("color", "black");
-				if($(this).val()==InputText){      
-					$(this).val('');              
-				}     
-			}).bind('blur',function(){       
-				if($(this).val()==""){          
-					$(this).val(InputText); 
-					$(Element).css("color", "grey");
-					$(this).removeClass('focus');         
-				}       
-			});     
-		});    
-	</script>
   </head>
   <body>
   <div id='page-wrap'>
@@ -59,21 +38,22 @@
 	<div>
 	<form id="galderenF" name="galderenF" action="proba.php" >			
 	
-		Galderaren egilearen eposta (*)  <input class="inputak" id="email" name="email" size="43" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"></input>
+		Galderaren egilearen eposta (*)  <input title="Hizkiak+ 3 digitu + “@ikasle.ehu.” + “eus”/“es” motakoa izan behar da" type="text" id="email" name="email" size="40" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(es|eus)$" 
+												placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”" required/>
 		<br><br>
-		Galderaren testua (*)  <input class="inputak" id="galdera" name="galdera" size="52"></input>
+		Galderaren testua (*)  <input title="Bete behar duzu" type="text" id="galdera" name="galdera" size="52" minlength="10"  required/>
 		<br><br>
-		Erantzun zuzena (*)   <input class="inputak" id="zuzena" name="zuzena" size="53" ></input>
+		Erantzun zuzena (*)   <input title="Bete behar duzu" type="text" id="zuzena" name="zuzena" size="53" required/>
 		<br><br>
-		Erantzun okerra1 (*)  <input class="inputak" id="okerra1" name="okerra1" size="52"></input>
+		Erantzun okerra1 (*)  <input title="Bete behar duzu" type="text" id="okerra1" name="okerra1" size="52" required/>
 		<br><br>
-		Erantzun okerra2 (*)  <input class="inputak" id="okerra2" name="okerra2" size="52"></input>
+		Erantzun okerra2 (*)  <input title="Bete behar duzu" type="text" id="okerra2" name="okerra2" size="52" required/>
 		<br><br>
-		Erantzun okerra3 (*)  <input class="inputak" id="okerra3" name="okerra3" size="52"></input>
+		Erantzun okerra3 (*)  <input title="Bete behar duzu" type="text" id="okerra3" name="okerra3" size="52" required/>
 		<br><br>
-		Galderaren zailtasuna (1 eta 5 artekoa) (*)   <input class="inputak" id="zail" name="zail" size="27"></input>
+		Galderaren zailtasuna (1 eta 5 artekoa) (*)   <input title="1 eta 5 artekoa izan behar du" type="text" id="zail" name="zail" size="27" pattern="^[1-5]$" required/>
 		<br><br>
-		Galderaren gai-arloa(*)   <input class="inputak" id="arloa" name="arloa" size="49"></input>
+		Galderaren gai-arloa(*)   <input title="Bete behar duzu" type="text" id="arloa" name="arloa" size="49" required/>
 		<br><br>
 		
 		Irudia<br><input type="file" id="imgInp" name="imgInp" accept="image/*"><br><br>
@@ -82,11 +62,12 @@
 		<input type="reset"  value="   Desegin   " id="desegin" onclick="loadFile(event)">
 	
 	
+	
 	</form>
 	</div>
     </section>
 	<footer class='main' id='f1'>
-		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">Zer da galdetegi bat?</a></p>
+		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
 		<a href='https://github.com'>Link GITHUB</a>
 	</footer>
 </div>
