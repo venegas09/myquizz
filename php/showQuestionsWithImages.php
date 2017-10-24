@@ -40,5 +40,7 @@
 			;
 		}
 	}
+	echo "<p><a href='../addQuestion.html'>Beste galdera bat txertatu.</a></p>";
+	echo "<p><a href='../layout.html'>Hasierara joan.</a></p>";
 	mysqli_free_result($ema);
 ?>
