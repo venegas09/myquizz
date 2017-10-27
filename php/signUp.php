@@ -17,7 +17,7 @@
 		nav {float: left; width: 15%; height: 550px;}
 	    section {float: right; width: 80%; height: 550px;}	
 	</style>
-	<!--<script src=".\javascript\egiaztatu.js"></script>-->
+	<script src=".\javascript\egiaztatu.js"></script>
 	<script type="text/javascript" src=".\javascript\irudiaKargatu.js"></script>
 	<script type="text/javascript" src=".\javascript\irudiaEzabatu.js"></script>
 		<script type="text/javascript">      
