@@ -19,6 +19,7 @@
 	</style>
 	<script type="text/javascript" src="..\javascript\irudiaKargatu.js"></script>
 	<script type="text/javascript" src="..\javascript\irudiaEzabatu.js"></script>
+	<script type="text/javascript" src="..\javascript\erregEgiaztatu.js"></script>
 	
   </head>
   <body>
@@ -35,18 +36,17 @@
     
 	
 	<div>
-	<form id="galderenF" name="galderenF" action="./php/addQuestionWithImage.php" enctype="multipart/form-data" method="post" >			
+	<form id="erregF" name="erregF" enctype="multipart/form-data" method="post" >			
 	
-		Eposta (*)  <input class="inputak" id="email" name="email" size="43"  title="Hizkiak+ 3 digitu + “@ikasle.ehu.” + “eus”/“es” motakoa izan behar da" 
-						   placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"  pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(es|eus)$" required/>
+		Eposta (*)  <input class="inputak" id="email" name="email" size="43" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"/>
 		<br><br>
-		Deitura (*)  <input class="inputak" id="deitura" name="deitura" size="52" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(es|eus)$" required/>
+		Deitura (*)  <input class="inputak" id="deitura" name="deitura" size="52"/>
 		<br><br>
-		Nick (*)   <input class="inputak" id="nick" name="nick" size="53" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(es|eus)$" required/>
+		Nick (*)   <input class="inputak" id="nick" name="nick" size="53"/>
 		<br><br>
-		Pasahitza (*)  <input class="inputak" id="pass" name="pass" size="52" minlength="6">
+		Pasahitza (*)  <input type="password" class="inputak" id="pass" name="pass" size="52"/>
 		<br><br>
-		Pasahitza errepikatu(*)   <input class="inputak" id="pass2" name="pass2" size="49" minlength="6" required/>
+		Pasahitza errepikatu(*)   <input type="password" class="inputak" id="pass2" name="pass2" size="49"/>
 		<br><br>
 		
 		Perfil irudia<br><input type="file" id="imgInp" name="imgInp" accept="image/*"><br><br>
@@ -65,3 +65,27 @@
 </div>
 </body>
 </html>
+<?php
+	if(isset($_POST['email'])){
+		include 'configEzarri.php';
+		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_POST[email]'");
+		if(mysqli_num_rows($erab)>0){
+			echo "<script>alert('Adierazitako email-a dagoeneko existitzen da. Beste bat aukeratu.')</script>";
+		}else{
+			if($_FILES['imgInp']['error']){
+				$irudia = 0;
+			}else{
+				$irudia = addslashes(file_get_contents($_FILES['imgInp']['tmp_name']));
+			}
+			$sql="INSERT INTO erabiltzaileak(email,deitura,nick,pass,imgInp)
+				VALUES ('$_POST[email]', '$_POST[deitura]', '$_POST[nick]', '$_POST[pass]', '$irudia')";
+			$ema = mysqli_query($link, $sql);
+			if(!$ema){
+				echo "<script>alert('Errorea query-a gauzatzerakoan: ' . mysqli_error($link))</script>";
+				exit(1);
+			}else{
+				echo "<script>alert('Erabiltzailea gehitu da.')</script>";
+			}
+		}
+	}
+?>
