@@ -1,38 +1,34 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Galdetegia</title>
-    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<title>Kredituak</title>
+    <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
 		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
-		   href='stylesPWS/wide.css' />
+		   href='../stylesPWS/wide.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
-		   href='stylesPWS/smartphone.css' />
+		   href='../stylesPWS/smartphone.css' />
   </head>
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <span class="right"><a href="./php/logIn.php">LogIn</a> </span>&ensp;
-	  <span class="right"><a href='./php/signUp.php'>Erregistratu</a></span>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
-	<h2>Galdetegia: galdera eroak</h2>
+	<h2>Kredituak</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.html'>Hasiera</a></span>
-		<span><a href='credits.html'>Kredituak</a></span>
-	
+		<span><a href="layoutR.php?email=<?php echo($_GET['email']) ?>"><img src="../irudiak\flecha.png" width="70" href="layoutR.php?email=<?php echo($_GET['email']) ?>"></a></span>
 	</nav>
     <section class="main" id="s1">
-    
+	<h3>Ruben Venegas eta Xabier Garmendia</h3>
+	<h4>Software Ingenieritza</h4>
+	<br>
+	<img src="../irudiak/Ruben.png">
+	<img src="../irudiak/Xabi.png">
 	
-	<div>
-	Quizzes and credits will be displayed in this spot in future laboratories ...
-
-	</div>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">Zer da galdetegi bat?</a></p>

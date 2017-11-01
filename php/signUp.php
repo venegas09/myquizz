@@ -38,15 +38,15 @@
 	<div>
 	<form id="erregF" name="erregF" enctype="multipart/form-data" method="post" >			
 	
-		Eposta (*)  <input class="inputak" id="email" name="email" size="43" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"/>
+		Eposta (*)&nbsp;  <input class="inputak" id="email" name="email" size="54" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"/>
 		<br><br>
-		Deitura (*)  <input class="inputak" id="deitura" name="deitura" size="52"/>
+		Deitura (*)  <input class="inputak" id="deitura" name="deitura" size="54"/>
 		<br><br>
-		Nick (*)   <input class="inputak" id="nick" name="nick" size="53"/>
+		Nick (*)&nbsp; &nbsp; &nbsp;  <input class="inputak" id="nick" name="nick" size="54"/>
 		<br><br>
 		Pasahitza (*)  <input type="password" class="inputak" id="pass" name="pass" size="52"/>
 		<br><br>
-		Pasahitza errepikatu(*)   <input type="password" class="inputak" id="pass2" name="pass2" size="49"/>
+		Pasahitza errepikatu(*)   <input type="password" class="inputak" id="pass2" name="pass2" size="40"/>
 		<br><br>
 		
 		Perfil irudia<br><input type="file" id="imgInp" name="imgInp" accept="image/*"><br><br>
@@ -66,7 +66,7 @@
 </body>
 </html>
 <?php
-	if(isset($_POST['email'])){
+if(isset($_POST['email'])){
 		include 'configEzarri.php';
 		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_POST[email]'");
 		if(mysqli_num_rows($erab)>0){
@@ -84,8 +84,12 @@
 				echo "<script>alert('Errorea query-a gauzatzerakoan: ' . mysqli_error($link))</script>";
 				exit(1);
 			}else{
-				echo "<script>alert('Erabiltzailea gehitu da.')</script>";
+				echo "<script>
+						alert('Erabiltzailea zuzen sortu da');
+						window.location.href='layoutR.php?email="; echo($_POST['email']); echo"';
+					</script>";
 			}
 		}
 	}
 ?>
+
