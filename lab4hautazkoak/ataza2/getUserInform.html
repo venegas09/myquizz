@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>GetUserInform</title>                 	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>             
+        <style>            
+            body{
+                
+                background-color: orange;
+            }            
+        </style>                    
+       <script>                  
+			$(document).ready(function(){
+				$("#botoia").click(function(){
+					$.get('erabiltzaileak.xml', function(d){
+						var epostenZer = $(d).find('eposta');
+						var izenaZer = $(d).find('izena');
+						var ab1Zer = $(d).find('abizena1');
+						var ab2Zer = $(d).find('abizena2');
+						var telefZer = $(d).find('telefonoa');
+						var dago=false;
+						var pos;
+						for (var i = 0; i < epostenZer.length; i++){
+							if($("#email").val()==epostenZer[i].childNodes[0].nodeValue){
+								dago=true;
+								pos=i;
+							}
+						}
+						if(dago==false){
+							alert("Eposta hau ez dago UPV/EHUn erregistraturik. Sar ezazu beste bat.")
+						}else{
+							$("#number").val(telefZer[pos].childNodes[0].nodeValue);
+							$("#izena").val(izenaZer[pos].childNodes[0].nodeValue);
+							$("#abizena").val(ab1Zer[pos].childNodes[0].nodeValue + " " + ab2Zer[pos].childNodes[0].nodeValue);
+						}
+					})
+				});
+			});
+        </script>
+    </head>
+    <body>
+		<center>
+			<h1>Sartu ikasle baten eposta zuzen bat</br> lortzeko bere datuak</h1>
+		<form>
+			<h3>Ikaslearen eposta:</h3>
+			<input type="text" name="email" id="email" size="30">
+			<br><h3>Telephone number:</h3> 
+			<input type="text" name="number" id="number" size="30">  
+			<br><h3>Ikaslearen izena:</h3>
+			<input type="text" name="izena" id="izena" size="30">
+			<h3>Ikaslearen abizena:</h3>
+			<input type="text" name="abizena" id="abizena" size="30">
+			<br><br>
+			<input  type="button" id="botoia" value="Bilatu">
+		</form>
+		</center>  
+	</body>
+</html>

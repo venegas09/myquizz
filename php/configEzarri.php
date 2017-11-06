@@ -8,7 +8,7 @@
 	}else{
 		$zerbitzaria = "localhost";
 		$erabiltzailea = "id2921942_xabivenegas";
-		$gakoa = "***";
+		$gakoa = "**";
 		$db = "id2921942_quiz";
 	}
 	$link = mysqli_connect($zerbitzaria, $erabiltzailea, $gakoa, $db);

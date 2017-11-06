@@ -92,14 +92,14 @@ if(isset($_POST['galdera'])){
 		($_POST['okerra3']=="")||($_POST['zail']=="")||($_POST['arloa']=="")||($_GET['email']=="")){
 		echo "<script>
 						alert('Derrigorrezko hutsuneak bete behar dituzu');
-						window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
+						//window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
 					</script>";
 		exit(1);
 	}
 	if(strlen($_POST['galdera'])<10){
 		echo "<script>
 					alert('Galderak gutxienez 10 karaktere izan behar ditu');
-					window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
+					//window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
 			 </script>";
 		exit(1);
 	}	
@@ -119,17 +119,52 @@ if(isset($_POST['galdera'])){
 	$sql = "INSERT INTO questions(email, galdera, zuzena, okerra1, okerra2, okerra3, zail, arloa, imgInp) 
 			VALUES ('$_GET[email]', '$_POST[galdera]', '$_POST[zuzena]', '$_POST[okerra1]', '$_POST[okerra2]',
 					'$_POST[okerra3]', '$_POST[zail]', '$_POST[arloa]', '$irudia')";
+	
 	$ema = mysqli_query($link, $sql);
+	
 	if(!$ema){
 		echo "Errorea query-a gauzatzerakoan: ' . mysqli_error($link);";
 		echo "<p><a href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"'>Beste galdera bat gehitu</a></p>";
 		die();
 	}else{
 		echo "<script>
-						alert('Erregistroa gehitu da!');
-						window.location.href='showQuestionsWithImages.php?email="; echo($_GET['email']); echo"';
+						alert('Erregistroa gehitu da datu basean!');
+						//window.location.href='showQuestionsWithImages.php?email="; echo($_GET['email']); echo"';
 			</script>";
-			
+		
+		$FILE = '../xml/questions.xml';
+
+		if (!file_exists($FILE)) {
+			echo "<script>
+						alert('XML fitxategia ez da existitzen.');
+				</script>";
+		} elseif (!($xml = simplexml_load_file($FILE))) {
+			echo "<script>
+						alert('XML fitxategia ezin izan da kargatu.');
+				</script>";
+		}else{
+			$assessmentItem = $xml->addChild('assessmentItem');
+			$assessmentItem->addAttribute('complexity',$_POST['zail']);
+			$assessmentItem->addAttribute('subject',$_POST['arloa']);
+				
+			$itemBody = $assessmentItem->addChild('itemBody');
+			$itemBody->addChild('p',$_POST['galdera']);
+				
+			$correctResponse = $assessmentItem->addChild('correctResponse');	
+			$correctResponse->addChild('value',$_POST['zuzena']);
+				
+			$incorrectResponses = $assessmentItem->addChild('incorrectResponses');
+			$incorrectResponses->addChild('value',$_POST['okerra1']);
+			$incorrectResponses->addChild('value',$_POST['okerra2']);
+			$incorrectResponses->addChild('value',$_POST['okerra3']);
+				
+			$xml->asXML('../xml/questions.xml');	
+					
+			echo "<script>
+						alert('Erregistroa gehitu da questions.xml fitxategian!');
+						window.location.href='showXMLQuestions.php?email="; echo($_GET['email']); echo"';
+				</script>";
+		}	
 	}
 }	
 ?>
