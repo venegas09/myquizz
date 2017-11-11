@@ -5,19 +5,19 @@ $(document).ready(function(){
 		var nick = new RegExp("^[A-Za-z0-9]+$");
 		var password = document.getElementById("pass");
 		var confirm_password = document.getElementById("pass2");
-		if($("#email").val().length==0 || $("#deitura").val().length==0 || $("#nick").val().length==0 || $("#pass").val().length==0 || $("#pass2").val().length==0){
+		if($("#email").val().trim().length==0 || $("#deitura").val().trim().length==0 || $("#nick").val().trim().length==0 || $("#pass").val().length==0 || $("#pass2").val().length==0){
 			alert("Bete derrigorrezko hutsuneak."); 
 			return false;
 		}
-		if(!emailER.test($("#email").val())){
+		if(!emailER.test($("#email").val().trim())){
 			alert("Emaila gaizki idatzi duzu: \n Hizkiak+ 3 digitu + “@ikasle.ehu.” + “eus”/“es” motakoa izan behar da.");
 			return false;
 		}
-		if(!deitura.test($("#deitura").val())){
+		if(!deitura.test($("#deitura").val().trim())){
 			alert("Deitura gaizki idatzi duzu: Izen eta abizenak, gutxienez bi hitz hizki larriz hasten direnak.");
 			return false;
 		}
-		if(!nick.test($("#nick").val())){
+		if(!nick.test($("#nick").val().trim())){
 			alert("Nick-a gaizki idatzi duzu: Hitz alfanumeriko bakarra.");
 			return false;
 		}

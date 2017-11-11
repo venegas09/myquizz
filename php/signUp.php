@@ -68,7 +68,11 @@
 <?php
 if(isset($_POST['email'])){
 		include 'configEzarri.php';
-		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_POST[email]'");
+		$email=trim($_POST['email']);
+		$deitura=trim($_POST['deitura']);
+		$nick=trim($_POST['nick']);
+		
+		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
 		if(mysqli_num_rows($erab)>0){
 			echo "<script>alert('Adierazitako email-a dagoeneko existitzen da. Beste bat aukeratu.')</script>";
 		}else{
@@ -78,7 +82,7 @@ if(isset($_POST['email'])){
 				$irudia = addslashes(file_get_contents($_FILES['imgInp']['tmp_name']));
 			}
 			$sql="INSERT INTO erabiltzaileak(email,deitura,nick,pass,imgInp)
-				VALUES ('$_POST[email]', '$_POST[deitura]', '$_POST[nick]', '$_POST[pass]', '$irudia')";
+				VALUES ('$email', '$deitura', '$nick', '$_POST[pass]', '$irudia')";
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "<script>alert('Errorea query-a gauzatzerakoan: ' . mysqli_error($link))</script>";
@@ -86,7 +90,7 @@ if(isset($_POST['email'])){
 			}else{
 				echo "<script>
 						alert('Erabiltzailea zuzen sortu da');
-						window.location.href='layoutR.php?email="; echo($_POST['email']); echo"';
+						window.location.href='../layout.html';
 					</script>";
 			}
 		}

@@ -57,14 +57,15 @@
 <?php
 if(isset($_POST['email'])){
 		include 'configEzarri.php';
-		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_POST[email]' and pass='$_POST[pass]'");
+		$email=trim($_POST['email']);
+		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email' and pass='$_POST[pass]'");
 		if(mysqli_num_rows($erab)<1){
 			echo "<script>alert('LogIn-a ez da zuzena.')</script>";
 		}else{
 			if(mysqli_num_rows($erab)==1){ 
 				echo "<script>
 						alert('Ongi etorri!');
-						window.location.href='layoutR.php?email="; echo($_POST['email']); echo"';
+						window.location.href='layoutR.php?email="; echo($email); echo"';
 				</script>";
 				
 			}else{

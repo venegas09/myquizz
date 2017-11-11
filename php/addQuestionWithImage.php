@@ -88,22 +88,30 @@
 <?php
 if(isset($_POST['galdera'])){	
 	include 'configEzarri.php';
-	if(($_POST['galdera']=="")||($_POST['zuzena']=="")||($_POST['okerra1']=="")||($_POST['okerra2']=="")||
-		($_POST['okerra3']=="")||($_POST['zail']=="")||($_POST['arloa']=="")||($_GET['email']=="")){
+	$galdera=trim($_POST['galdera']);
+	$zuzena=trim($_POST['zuzena']);
+	$okerra1=trim($_POST['okerra1']);
+	$okerra2=trim($_POST['okerra2']);
+	$okerra3=trim($_POST['okerra3']);
+	$zail=trim($_POST['zail']);
+	$arloa=trim($_POST['arloa']);
+	
+	if(($galdera=="")||($zuzena=="")||($okerra1=="")||($okerra2=="")||
+		($okerra3=="")||($zail=="")||($arloa=="")||($_GET['email']=="")){
 		echo "<script>
 						alert('Derrigorrezko hutsuneak bete behar dituzu');
 						//window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
 					</script>";
 		exit(1);
 	}
-	if(strlen($_POST['galdera'])<10){
+	if(strlen($galdera)<10){
 		echo "<script>
 					alert('Galderak gutxienez 10 karaktere izan behar ditu');
 					//window.location.href='addQuestionWithImage.php?email="; echo($_GET['email']); echo"';
 			 </script>";
 		exit(1);
 	}	
-	if(!preg_match("/^[1-5]{1}$/", $_POST['zail'])){
+	if(!preg_match("/^[1-5]{1}$/", $zail)){
 		echo "<script>
 					alert('Zailtasun maila 1-5 tartean egon behar da.');
 					
@@ -117,8 +125,8 @@ if(isset($_POST['galdera'])){
 		$irudia = addslashes(file_get_contents($_FILES['imgInp']['tmp_name']));
 	}
 	$sql = "INSERT INTO questions(email, galdera, zuzena, okerra1, okerra2, okerra3, zail, arloa, imgInp) 
-			VALUES ('$_GET[email]', '$_POST[galdera]', '$_POST[zuzena]', '$_POST[okerra1]', '$_POST[okerra2]',
-					'$_POST[okerra3]', '$_POST[zail]', '$_POST[arloa]', '$irudia')";
+			VALUES ('$_GET[email]', '$galdera', '$zuzena', '$okerra1', '$okerra2',
+					'$okerra3', '$zail', '$arloa', '$irudia')";
 	
 	$ema = mysqli_query($link, $sql);
 	
@@ -144,19 +152,19 @@ if(isset($_POST['galdera'])){
 				</script>";
 		}else{
 			$assessmentItem = $xml->addChild('assessmentItem');
-			$assessmentItem->addAttribute('complexity',$_POST['zail']);
-			$assessmentItem->addAttribute('subject',$_POST['arloa']);
+			$assessmentItem->addAttribute('complexity',$zail);
+			$assessmentItem->addAttribute('subject',$arloa);
 				
 			$itemBody = $assessmentItem->addChild('itemBody');
-			$itemBody->addChild('p',$_POST['galdera']);
+			$itemBody->addChild('p',$galdera);
 				
 			$correctResponse = $assessmentItem->addChild('correctResponse');	
-			$correctResponse->addChild('value',$_POST['zuzena']);
+			$correctResponse->addChild('value',$zuzena);
 				
 			$incorrectResponses = $assessmentItem->addChild('incorrectResponses');
-			$incorrectResponses->addChild('value',$_POST['okerra1']);
-			$incorrectResponses->addChild('value',$_POST['okerra2']);
-			$incorrectResponses->addChild('value',$_POST['okerra3']);
+			$incorrectResponses->addChild('value',$okerra1);
+			$incorrectResponses->addChild('value',$okerra2);
+			$incorrectResponses->addChild('value',$okerra3);
 				
 			$xml->asXML('../xml/questions.xml');	
 					
