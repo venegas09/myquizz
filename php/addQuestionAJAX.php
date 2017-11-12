@@ -1,13 +1,13 @@
 <?php
 	include 'configEzarri.php';
-	$eposta=trim($_GET['eposta']);
-	$galdera=trim($_GET['galdera']);
-	$zuzena=trim($_GET['zuzena']);
-	$okerra1=trim($_GET['okerra1']);
-	$okerra2=trim($_GET['okerra2']);
-	$okerra3=trim($_GET['okerra3']);
-	$zail=trim($_GET['zail']);
-	$arloa=trim($_GET['arloa']);
+	$eposta=trim($_POST['eposta']);
+	$galdera=trim($_POST['galdera']);
+	$zuzena=trim($_POST['zuzena']);
+	$okerra1=trim($_POST['okerra1']);
+	$okerra2=trim($_POST['okerra2']);
+	$okerra3=trim($_POST['okerra3']);
+	$zail=trim($_POST['zail']);
+	$arloa=trim($_POST['arloa']);
 
 	if(($galdera=="")||($zuzena=="")||($okerra1=="")||($okerra2=="")||
 		($okerra3=="")||($zail=="")||($arloa=="")||($eposta=="")){

@@ -37,7 +37,7 @@
 			xhro1.open("GET","showQuestionAJAX.php", true);
 			xhro1.send();
 			}else{
-				document.getElementById("jasotakoGalderak").innerHTML= "Galderak hemen ...";
+				document.getElementById("jasotakoGalderak").innerHTML= "Galderak hemen bistaratuko dira.";
 				document.getElementById("galderakIkusi").value="Galderak ikusi";
 			}
 		}
@@ -57,14 +57,35 @@
 			var okerra2= document.getElementById("okerra2").value;
 			var okerra3= document.getElementById("okerra3").value;
 			var zail= document.getElementById("zail").value;
-			var arloa= document.getElementById("arloa").value;
-			var url = encodeURI("addQuestionAJAX.php?eposta="+eposta+"&galdera="+galdera+"&zuzena="+zuzena+"&okerra1="+okerra1+"&okerra2="+okerra2+"&okerra3="+okerra3+"&zail="+zail+"&arloa="+arloa);
-			xhro2.open("GET", url , true);
-			xhro2.send();
+			var arloa= document.getElementById("arloa").value;	
+			xhro2.open("POST", "addQuestionAJAX.php" , true);
+			xhro2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhro2.send("eposta="+encodeURIComponent(eposta)+"&galdera="+encodeURIComponent(galdera)+"&zuzena="+encodeURIComponent(zuzena)+"&okerra1="+encodeURIComponent(okerra1)+"&okerra2="+encodeURIComponent(okerra2)+"&okerra3="+encodeURIComponent(okerra3)+"&zail="+encodeURIComponent(zail)+"&arloa="+encodeURIComponent(arloa));
+		}
+	</script>
+
+	<script type="text/javascript" language = "javascript">		
+	    
+		xhro3 = new XMLHttpRequest();
+		xhro3.onreadystatechange=function(){
+			if (xhro3.readyState==4 && xhro3.status==200){
+				document.getElementById("galderakop").innerHTML=xhro3.responseText; 
+			}
+		}
+		
+		function galderaKopurua(){
+			var erab= "<?php echo($_GET['email']) ?>";
+			xhro3.open("GET", "zenbatGalderaAJAX.php?erab="+erab, true);
+			xhro3.send();
+		}		
+	</script>
+	<script>
+		function deitu(){
+			setInterval(galderaKopurua(),20000);
 		}
 	</script>
  </head>
-  <body>
+  <body onLoad="deitu()">
   <div id='page-wrap'>
 	<header class='main' id='h1'>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
@@ -125,8 +146,10 @@
 	</div>
 	<div id="galderakBistaratu">
 		<center>
+		<div id="galderakop"><p>Galdera kop hemen</p></div>
+		<br>
 		<input type="button"  value="Galderak ikusi" name="galderakIkusi" id="galderakIkusi" onclick="galderakJaso()" >
-		<div id="jasotakoGalderak"><p>Galderak hemen ...</p></div>
+		<div id="jasotakoGalderak"><p>Galderak hemen bistaratuko dira.</p></div>
 		</center>
 	</div>
     </section>
