@@ -21,9 +21,10 @@
     </header>
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href="layoutR.php?email=<?php echo($_GET['email']) ?>">Hasiera</a></span>
-		<span><a href="showQuestionsWithImages.php?email=<?php echo($_GET['email']) ?>">Galderak ikusi</a></span>		
+		<span><a href="showQuestionsWithImages.php?email=<?php echo($_GET['email']) ?>">Galderak ikusi</a></span>
+		<span><a href="handlingQuizes.php?email=<?php echo($_GET['email']) ?>">HANDLING QUIZES</a></span>
 		<span><a href="addQuestionWithImage.php?email=<?php echo($_GET['email']) ?>">Galdera gehitu</a></span>
-		<span><a href="credits.php?email=<?php echo($_GET['email']) ?>">Kredituak</a></span>
+		<span><a href="credits.php?email=<?php echo($_GET['email']) ?>">Kredituak</a></span>	
 		<span><a href="showXMLQuestions.php?email=<?php echo($_GET['email']) ?>">XML galderak ikusi</a></span>
 	</nav>
     <section class="main" id="s1">
