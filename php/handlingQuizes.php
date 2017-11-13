@@ -26,16 +26,16 @@
 	<script type="text/javascript" language = "javascript">
 		xhro1 = new XMLHttpRequest();
 		xhro1.onreadystatechange = function(){
-		if ((xhro1.readyState==4)&&(xhro1.status==200 )){ 
-			document.getElementById("jasotakoGalderak").innerHTML= xhro1.responseText;
-			document.getElementById("galderakIkusi").value="Itxi galderak";
+			if ((xhro1.readyState==4)&&(xhro1.status==200 )){ 
+				document.getElementById("jasotakoGalderak").innerHTML= xhro1.responseText;
+				document.getElementById("galderakIkusi").value="Itxi galderak";
 			}
 		}
 
 		function galderakJaso(){
 			if(document.getElementById("galderakIkusi").value!="Itxi galderak"){
-			xhro1.open("GET","showQuestionAJAX.php", true);
-			xhro1.send();
+				xhro1.open("GET","showQuestionAJAX.php", true);
+				xhro1.send();
 			}else{
 				document.getElementById("jasotakoGalderak").innerHTML= "Galderak hemen bistaratuko dira.";
 				document.getElementById("galderakIkusi").value="Galderak ikusi";
@@ -45,9 +45,8 @@
 	<script type="text/javascript" language = "javascript">
 		xhro2 = new XMLHttpRequest();
 		xhro2.onreadystatechange=function(){
-		
-		if (xhro2.readyState==4 && xhro2.status==200){
-			document.getElementById("txertaketa").innerHTML=xhro2.responseText; }
+			if (xhro2.readyState==4 && xhro2.status==200){
+				document.getElementById("txertaketa").innerHTML=xhro2.responseText; }
 		}
 		function galderaTxertatu(){
 			var eposta= "<?php echo($_GET['email']) ?>";
@@ -65,14 +64,13 @@
 	</script>
 
 	<script type="text/javascript" language = "javascript">		
-	    
 		xhro3 = new XMLHttpRequest();
+		
 		xhro3.onreadystatechange=function(){
 			if (xhro3.readyState==4 && xhro3.status==200){
 				document.getElementById("galderakop").innerHTML=xhro3.responseText; 
 			}
 		}
-		
 		function galderaKopurua(){
 			var erab= "<?php echo($_GET['email']) ?>";
 			xhro3.open("GET", "zenbatGalderaAJAX.php?erab="+erab, true);
@@ -80,12 +78,24 @@
 		}		
 	</script>
 	<script>
-		function deitu(){
-			setInterval(galderaKopurua(),20000);
+		setInterval(galderaKopurua,20000);
+	</script>
+	<script type="text/javascript" language = "javascript">
+		xhro4 = new XMLHttpRequest();
+		
+		xhro4.onreadystatechange=function(){
+			if (xhro4.readyState==4 && xhro4.status==200){
+				document.getElementById("erabilKop").innerHTML=xhro4.responseText; 
+			}
 		}
+		function kontagailua(kont){
+			xhro4.open("GET", "zenbatErabiltzaileAJAX.php?kont="+kont, true);
+			xhro4.send();
+		}
+		setInterval(kontagailua,20000);
 	</script>
  </head>
-  <body onLoad="deitu()">
+  <body onLoad="galderaKopurua();kontagailua('gehitu')" onunload="kontagailua('kendu')">
   <div id='page-wrap'>
 	<header class='main' id='h1'>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
@@ -146,10 +156,11 @@
 	</div>
 	<div id="galderakBistaratu">
 		<center>
-		<div id="galderakop"><p>Galdera kop hemen</p></div>
+		<div id="galderakop"><p>Galdera kopurua hemen</p></div>
 		<br>
 		<input type="button"  value="Galderak ikusi" name="galderakIkusi" id="galderakIkusi" onclick="galderakJaso()" >
-		<div id="jasotakoGalderak"><p>Galderak hemen bistaratuko dira.</p></div>
+		<div id="jasotakoGalderak"><p>Galderak hemen bistaratuko dira.</p></div><br>
+		<div id="erabilKop"><p>Erabiltzaile kopurua hemen.</p></div>
 		</center>
 	</div>
     </section>
