@@ -1,0 +1,5 @@
+Lehenengo zenbatGalderaAJAX.php sortu dugu, bertan bi query egiten ditugu, bata datu baseko galdera kopurua lortzeko eta bestea
+erabiltzailearen galderak lortzeko (erabiltzailea GET-en bidez lortuko dugu).
+Ondoren AJAX XMLHttpRequest bat egiten dugu eta galderaKopurua() funtzioarekin zenbatGalderaAJAX.php-ri deitu egiten dio GET-en bidez
+erabiltzailea pasaz. galderaKopurua() funtzioari setInterval baten bidez egingo da, horrela adierazitako denboran (20s-ro) dei bat
+egingo dio.
