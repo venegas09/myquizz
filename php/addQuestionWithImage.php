@@ -45,7 +45,7 @@
 		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_GET[email]'");
 		while($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)){		
 		if($row['imgInp']){
-			echo '<img width="100" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
+			echo '<img width="100" height="120" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
 		}else{
 			echo '<img src="../irudiak/noimg.png" width="100">';
 		}

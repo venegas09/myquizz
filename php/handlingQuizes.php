@@ -112,26 +112,22 @@
 	<form id="galderenF" name="galderenF" enctype="multipart/form-data" method="post" >			
 	
 		<hr><hr>
-		Galderaren egilearen eposta:  <span class="inputak" id="eposta" name="eposta"> <?php echo($_GET['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
-		<?php
+		<center>
+				<?php
 		include 'configEzarri.php';
 		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_GET[email]'");
 		while($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)){		
 		if($row['imgInp']){
-			echo '<img width="100" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
+			echo '<img width="100" height="120" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
 		}else{
 			echo '<img src="../irudiak/noimg.png" width="100">';
 		}
 	}
-		?>
-		<hr><hr> 
-		<center>
-			<br>
-			<input type="button"  value="Galdera txertatu"id="galderakTxertatu" onclick="galderaTxertatu()">
-			<br>
-		</center>
-		<hr><hr>
+		?><br>
 		
+		Galderaren egilearen eposta:  <span class="inputak" id="eposta" name="eposta"> <?php echo($_GET['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
+		</center>
+		<hr><hr> 		
 		<br>
 		Galderaren testua (*)  <input class="inputak" id="galdera" name="galdera" size="52"></input>
 		<br><br>
@@ -147,20 +143,22 @@
 		<br><br>
 		Galderaren gai-arloa(*)   <input class="inputak" id="arloa" name="arloa" size="49"></input>
 		<br><br>
-		
+		<input type="button"  value="Galdera txertatu"id="galderakTxertatu" onclick="galderaTxertatu()">
 		<input type="reset"  value="   Desegin   " id="desegin" onclick="loadFile(event)">
-	
-		<div id="txertaketa"><b>Hemen iristen dena</b></div>
+		<hr><hr>
+		<div id="txertaketa"><b></b></div>
 		
 	</form>
 	</div>
 	<div id="galderakBistaratu">
+	<hr><hr>
 		<center>
-		<div id="galderakop"><p>Galdera kopurua hemen</p></div>
+		<div id="galderakop"><p></p></div>
 		<br>
 		<input type="button"  value="Galderak ikusi" name="galderakIkusi" id="galderakIkusi" onclick="galderakJaso()" >
+		<br><br>
 		<div id="jasotakoGalderak"><p>Galderak hemen bistaratuko dira.</p></div><br>
-		<div id="erabilKop"><p>Erabiltzaile kopurua hemen.</p></div>
+		<div id="erabilKop"><p></p></div>
 		</center>
 	</div>
     </section>
