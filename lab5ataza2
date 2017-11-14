@@ -1,0 +1,5 @@
+Lehenengo zenbatErabiltzaileAJAX.php egin dugu, bertan counter.xml-ko balioa irakurtzeaz aparte +1 edo -1 egingo dugu GET-en adierazitako 
+balioaren arabera ('gehitu' gehitzeko eta 'kendu' kentzeko). Ez bada ezer jartzen bakarrik xml-a irakurriko du.
+Ondoren AJAX XMLHttpRequest bat egiten da eta kontagailua(kont) funtzioaren bidez zenbatErabiltzaileAJAX.php-ri deituko dio GET-en bidez
+egin beharreko eragiketa adieraziz. Funtzio honi dei egingo zaio pagina kargatzean 'gehitu' parametroa pasaz, pagina-tik irtetzean 'kendu'
+parametroa pasaz edo setInterval baten bidez parametrorik pasa gabe. Azken hau erabiliko da paginan ikusten den kontagailua eguneratzeko.
