@@ -26,21 +26,26 @@
 		xhro1.onreadystatechange = function(){
 			if ((xhro1.readyState==4)&&(xhro1.status==200 )){ 
 				var erantzuna = xhro1.responseText;
-				if(erantzuna=="EZ"){
+				if(erantzuna=='EZ'){
 					botoiAc1=false;
 					document.getElementById("emaitzakE").innerHTML="Eposta ez dago WS-n matrikulatuta!";
 					document.getElementById("emaitzakE").style.color="red";
-				}else if(erantzuna=="BAI"){
+				}else if(erantzuna=='BAI'){
 					botoiAc1=true;
 					document.getElementById("emaitzakE").innerHTML="Eposta WS-n matrikulatuta dago!";
 					document.getElementById("emaitzakE").style.color="black";
+				}
+				if(botoiAc1 && botoiAc2){
+					document.getElementById("submit").disabled = false;
+				}else{
+					document.getElementById("submit").disabled = true;
 				}
 			}
 		}
 		$(document).ready(function(){
 			$("#email").change(function(){
 				if(document.getElementById("email").value!=""){
-					var erab = document.getElementById("email").value;
+					var erab = document.getElementById("email").value.trim();
 					xhro1.open("GET","emailSOAP.php?email="+erab, true);
 					xhro1.send();
 				}
@@ -53,31 +58,34 @@
 		xhro2.onreadystatechange = function(){
 			if ((xhro2.readyState==4)&&(xhro2.status==200 )){ 
 				var erantzuna = xhro2.responseText;
-				if(erantzuna=="BALIOGABEA"){
+				if(erantzuna=='BALIOGABEA'){
 					botoiAc2=false;
 					document.getElementById("emaitzakP").innerHTML="Pasahitza ahula da, beste batekin saiatu.";
 					document.getElementById("emaitzakP").style.color="red";
-				}else if(erantzuna=="BALIOZKOA"){
+				}else if(erantzuna=='BALIOZKOA'){
 					botoiAc2=true;
-					document.getElementById("emaitzakP").innerHTML="Pasahitza segurua.";
+					document.getElementById("emaitzakP").innerHTML="Pasahitza segurua da.";
 					document.getElementById("emaitzakP").style.color="black";
+				}
+				if(botoiAc1 && botoiAc2){
+					document.getElementById("submit").disabled = false;
+				}else{
+					document.getElementById("submit").disabled = true;
 				}
 			}
 		}
 		$(document).ready(function(){
 			$("#pass").change(function(){
 				if(document.getElementById("pass").value!=""){
-					var pasa = document.getElementById("pass").value;
-					xhro2.open("GET","passSOAP.php?pass="+pasa, true);
-					xhro2.send();
+					xhro2.open("POST", 'passSOAP.php', true);
+					xhro2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					xhro2.send("password="+$("#pass").val());
 				}
 			});
 		});
 	</script>
 	<script>
-		if(botoiAc1==true){
-			document.getElementById("submit").disabled = false;
-		}
+		
 	</script>
   </head>
   <body>
