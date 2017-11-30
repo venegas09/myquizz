@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start()?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -96,7 +97,7 @@
 	<h2>Erregistratu</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='../layout.html'><img src="..\irudiak\flecha.png" width="75"></a></span>	
+		<span><a href='layout.php'><img src="..\irudiak\flecha.png" width="75"></a></span>	
 	</nav>
     <section class="main" id="s1">
     
@@ -140,7 +141,7 @@ if(isset($_POST['email'])){
 		$email=trim($_POST['email']);
 		$deitura=trim($_POST['deitura']);
 		$nick=trim($_POST['nick']);
-		
+		$pasahitza =crypt($_POST['pass'],'Lkwm8z5/');
 		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
 		if(mysqli_num_rows($erab)>0){
 			echo "<script>alert('Adierazitako email-a dagoeneko existitzen da. Beste bat aukeratu.')</script>";
@@ -151,7 +152,7 @@ if(isset($_POST['email'])){
 				$irudia = addslashes(file_get_contents($_FILES['imgInp']['tmp_name']));
 			}
 			$sql="INSERT INTO erabiltzaileak(email,deitura,nick,pass,imgInp)
-				VALUES ('$email', '$deitura', '$nick', '$_POST[pass]', '$irudia')";
+				VALUES ('$email', '$deitura', '$nick', '$pasahitza', '$irudia')";
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "<script>alert('Errorea query-a gauzatzerakoan: ' . mysqli_error($link))</script>";
@@ -159,10 +160,16 @@ if(isset($_POST['email'])){
 			}else{
 				echo "<script>
 						alert('Erabiltzailea zuzen sortu da');
-						window.location.href='../layout.html';
+						window.location.href='layout.php';
 					</script>";
 			}
 		}
+}
+	
+	if(isset($_SESSION['email'])){
+		echo "<script>
+				window.location.href='layout.php';
+			</script>";
 	}
 ?>
 

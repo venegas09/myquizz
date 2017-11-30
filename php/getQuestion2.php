@@ -1,7 +1,7 @@
 <?php
 require_once('lib/nusoap.php');
 require_once('lib/class.wsdlcache.php');
-$ns = "http://localhost/wsrv17/myquiz/php/getQuestion.php?wsdl";
+$ns = "http://localhost/wsrv17/myquiz/php/getQuestion2.php?wsdl";
 $server = new soap_server;
 $server->configureWSDL('lortuDatuak',$ns);
 $server->wsdl->schemaTargetNamespace=$ns;
@@ -14,7 +14,12 @@ $server->wsdl->addComplexType(
    		array(
        	 	'testua' => array('name' => 'testua', 'type' => 'xsd:string'),
         	'zuzena' => array('name' => 'zuzena', 'type' => 'xsd:string'),
-        	'zail' => array('name' => 'zail', 'type' => 'xsd:int')
+			'okerra1' => array('name' => 'okerra1', 'type' => 'xsd:string'),
+			'okerra2' => array('name' => 'okerra2', 'type' => 'xsd:string'),
+			'okerra3' => array('name' => 'okerra3', 'type' => 'xsd:string'),
+        	'zail' => array('name' => 'zail', 'type' => 'xsd:int'),
+			'arloa' => array('name' => 'arloa', 'type' => 'xsd:string')
+			
     	)
 );
 
@@ -30,13 +35,21 @@ function lortuDatuak($x){
 		return array(
 			'testua'=> $row['galdera'],
 			'zuzena'=> $row['zuzena'],
-			'zail'=> $row['zail']
+			'okerra1'=> $row['okerra1'],
+			'okerra2'=> $row['okerra2'],
+			'okerra3'=> $row['okerra3'],
+			'zail'=> $row['zail'],
+			'arloa'=> $row['arloa']
 		);		
 	}else{ 
 		return array(
 			'testua'=> "",
 			'zuzena'=> "",
-			'zail'=> 0
+			'okerra1'=> "",
+			'okerra2'=> "",
+			'okerra3'=> "",
+			'zail'=> 0,
+			'arloa'=> ""
 		);
 	}	
 }

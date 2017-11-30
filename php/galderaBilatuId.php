@@ -21,15 +21,13 @@
 		xhro1 = new XMLHttpRequest();
 		xhro1.onreadystatechange = function(){
 			if ((xhro1.readyState==4)&&(xhro1.status==200 )){ 
-				var erantzuna = xhro1.responseText;
-					botoiAc1=false;
-					document.getElementById("erantzuna").innerHTML=erantzuna;
+					document.getElementById("erantzuna").innerHTML=xhro1.responseText;
 			}
 		}
 		$(document).ready(function(){
 			$("#botoia").click(function(){
 				if(document.getElementById("id").value!=""){
-					xhro1.open("POST", 'getQuestion.php', true);
+					xhro1.open("POST", 'getQuestionWZ.php', true);
 					xhro1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					xhro1.send("id="+$("#id").val());
 				}

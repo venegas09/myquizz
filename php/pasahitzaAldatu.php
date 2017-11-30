@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>LogIn</title>
+	<title>Pasahitza Aldatu</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
 	<link rel='stylesheet' type='text/css' href='../stylesPWS/styleAddQuestions.css' />
 	<link rel='stylesheet' 
@@ -17,7 +17,6 @@
 	<style>
 		nav {float: left; width: 15%; height: 550px;}
 	    section {float: right; width: 80%; height: 550px;}	
-	
 	</style>
 
   </head>
@@ -26,24 +25,22 @@
 	<header class='main' id='h1'>
       
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
-	<h2>LogIn</h2>
+	<h2>Pasahitza Aldatu</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.php'><img src="..\irudiak\flecha.png" width="75"></a></span>	
+		<span><a href='logIn.php'><img src="..\irudiak\flecha.png" width="75"></a></span>	
 	</nav>
     <section class="main" id="s1">
 	<div>
-	<form id="loginF" name="loginF" method="post" >			
-	
+	<form id="passAld" name="loginF" method="post" >			
+		Sartu dagokion eposta eta nick-a pasahitza aldatu ahal izateko:
+		<br><br>
 		Eposta  &nbsp;&nbsp;&nbsp;&nbsp;  <input class="inputak" id="email" name="email" size="43" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"/>
 		<br><br>
-		Pasahitza  <input class="inputak" type="password" id="pass" name="pass" size="43"/>
+		Nick  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="inputak" type="nick" id="nick" name="nick" size="43"/>
 		<br><br>
-		<a href="pasahitzaAldatu.php">Pasahitza ahaztu duzu?</a></br></br>
 		<input type="submit"  value="   Bidali   " id="submit">
-		<input type="reset"  value="   Desegin   " id="desegin" >
-	
-	
+		<input type="reset"  value="   Desegin   " id="desegin" >	
 	</form>
 	</div>
     </section>
@@ -58,32 +55,20 @@
 <?php
 	if(isset($_POST['email'])){
 		include 'configEzarri.php';
-		if($_SESSION['gaizkiKont']<3 || !isset($_SESSION['gaizkiKont'])){
-			$email=trim($_POST['email']);
-			$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
-			if(mysqli_num_rows($erab)!=1){
-				echo "<script>alert('LogIn-a ez da zuzena.')</script>";
-				$_SESSION['gaizkiKont']=$_SESSION['gaizkiKont']+1;
-			}else{
-				$row= mysqli_fetch_array($erab, MYSQLI_ASSOC);
-				if(crypt($_POST['pass'],'Lkwm8z5/') == $row['pass']){
-					echo "<script>
-							alert('Ongi etorri!');
-							window.location.href='layout.php';
-						</script>";
-					$_SESSION['email']=$email;
-					$_SESSION['gaizkiKont']=0;
-				}else{
-					echo "<script>alert('LogIn-a ez da zuzena.')</script>";
-					$_SESSION['gaizkiKont']=$_SESSION['gaizkiKont']+1;
-				}
-			}
+		$email=trim($_POST['email']);
+		$nick=trim($_POST['nick']);
+		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
+		if(mysqli_num_rows($erab)!=1){
+			echo "<script>alert('Email hori duen erabiltzailerik ez da existitzen.')</script>";
 		}else{
-			$_SESSION['gaizkiKont']=0;
-			echo "<script>
-					alert('Hiru aldiz sahiatzeagatik sesioa blokeatu zaizu.');
-					window.location.href='layout.php';
-				</script>";
+			$row= mysqli_fetch_array($erab, MYSQLI_ASSOC);
+			if($row['nick']==$nick){
+				echo "<script>
+						window.location.href='pasahitzaAldatu2.php?email=$email';
+					</script>";
+			}else{
+				echo "<script>alert('Datuak ez dute kointziditzen.')</script>";
+			}
 		}
 	}
 	if(isset($_SESSION['email'])){

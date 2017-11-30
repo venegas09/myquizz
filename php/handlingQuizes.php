@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start()?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -49,7 +50,7 @@
 				document.getElementById("txertaketa").innerHTML=xhro2.responseText; }
 		}
 		function galderaTxertatu(){
-			var eposta= "<?php echo($_GET['email']) ?>";
+			var eposta= "<?php echo($_SESSION['email']) ?>";
 			var galdera= document.getElementById("galdera").value;
 			var zuzena= document.getElementById("zuzena").value;
 			var okerra1= document.getElementById("okerra1").value;
@@ -72,7 +73,7 @@
 			}
 		}
 		function galderaKopurua(){
-			var erab= "<?php echo($_GET['email']) ?>";
+			var erab= "<?php echo($_SESSION['email']) ?>";
 			xhro3.open("GET", "zenbatGalderaAJAX.php?erab="+erab, true);
 			xhro3.send();
 		}		
@@ -102,7 +103,7 @@
 	<h2>HandlingQuizes</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href="layoutR.php?email=<?php echo($_GET['email']) ?>"><img src="../irudiak\flecha.png" width="75" href="layoutR.php?email=<?php echo($_GET['email']) ?>"></a></span>
+		<span><a href="layout.php"><img src="../irudiak\flecha.png" width="75" href="layout.php"></a></span>
 			
 	</nav>
     <section class="main" id="s1">
@@ -115,7 +116,7 @@
 		<center>
 				<?php
 		include 'configEzarri.php';
-		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_GET[email]'");
+		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_SESSION[email]'");
 		while($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)){		
 		if($row['imgInp']){
 			echo '<img width="100" height="120" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
@@ -125,7 +126,7 @@
 	}
 		?><br>
 		
-		Galderaren egilearen eposta:  <span class="inputak" id="eposta" name="eposta"> <?php echo($_GET['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
+		Galderaren egilearen eposta:  <span class="inputak" id="eposta" name="eposta"> <?php echo($_SESSION['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
 		</center>
 		<hr><hr> 		
 		<br>
@@ -169,3 +170,14 @@
 </div>
 </body>
 </html>
+<?php
+	if($_SESSION['email']=="web000@ehu.es"){
+		echo "<script>
+				window.location.href='layout.php';
+			</script>";
+	}else if(!isset($_SESSION['email'])){
+		echo "<script>
+				window.location.href='logIn.php';
+			</script>";
+	}
+?>

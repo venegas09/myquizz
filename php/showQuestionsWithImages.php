@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start() ?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -62,11 +63,11 @@
 	<div>		
 		<hr><hr>
 		<center>
-		Eposta:<span class="inputak" id="eposta" name="eposta"> <?php echo($_GET['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
+		Eposta:<span class="inputak" id="eposta" name="eposta"> <?php echo($_SESSION['email']) ?></span> &nbsp; &nbsp; &nbsp; &nbsp;
 		<br><br>
 		<?php
 		include 'configEzarri.php';
-		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_GET[email]'");
+		$ema = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$_SESSION[email]'");
 		while($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)){		
 			if($row['imgInp']){
 				echo '<img width="100" src="data:image/png;base64,'.base64_encode($row['imgInp']).'">';	
@@ -76,9 +77,9 @@
 		}
 		?>
 		<br>
-		<a href='layoutR.php?email=<?php echo($_GET['email']) ?>'>Hasierara itzuli</a>
+		<a href='layout.php'>Hasierara itzuli</a>
 		<br>
-		<a href='addQuestionWithImage.php?email=<?php echo($_GET['email']) ?>'>Galdera bat gehitu</a> 
+		<a href='handlingQuizes.php'>Galdera bat gehitu</a> 
 		<br>
 		<hr><hr> 			
 	</div>

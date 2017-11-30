@@ -20,7 +20,7 @@
 	<h2>Kredituak</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href="layoutR.php?email=<?php echo($_GET['email']) ?>"><img src="../irudiak\flecha.png" width="70" href="layoutR.php?email=<?php echo($_GET['email']) ?>"></a></span>
+		<span><a href="layout.php"><img src="../irudiak\flecha.png" width="70" href="layoutR.php?email=<?php echo($_GET['email']) ?>"></a></span>
 	</nav>
     <section class="main" id="s1">
 	<h3>Ruben Venegas eta Xabier Garmendia</h3>

@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>LogIn</title>
+	<title>Pasahitza Aldatu</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
 	<link rel='stylesheet' type='text/css' href='../stylesPWS/styleAddQuestions.css' />
 	<link rel='stylesheet' 
@@ -17,7 +17,6 @@
 	<style>
 		nav {float: left; width: 15%; height: 550px;}
 	    section {float: right; width: 80%; height: 550px;}	
-	
 	</style>
 
   </head>
@@ -26,24 +25,20 @@
 	<header class='main' id='h1'>
       
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
-	<h2>LogIn</h2>
+	<h2>Pasahitza Aldatu</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.php'><img src="..\irudiak\flecha.png" width="75"></a></span>	
+		<span><a href='pasahitzaAldatu.php'><img src="..\irudiak\flecha.png" width="75"></a></span>	
 	</nav>
     <section class="main" id="s1">
 	<div>
-	<form id="loginF" name="loginF" method="post" >			
-	
-		Eposta  &nbsp;&nbsp;&nbsp;&nbsp;  <input class="inputak" id="email" name="email" size="43" placeholder="Hizkiak+3 digitu+“@ikasle.ehu.”+“eus”/“es”"/>
+	<form id="passAld2" name="loginF" method="post" >			
+		Pasahitz berria  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <input class="inputak" type="password" id="pass1" name="pass1" size="43" required/>
 		<br><br>
-		Pasahitza  <input class="inputak" type="password" id="pass" name="pass" size="43"/>
+		Errepikatu pasahitza  &nbsp;&nbsp;&nbsp;<input class="inputak" type="password" id="pass2" name="pass2" size="43"/>
 		<br><br>
-		<a href="pasahitzaAldatu.php">Pasahitza ahaztu duzu?</a></br></br>
 		<input type="submit"  value="   Bidali   " id="submit">
 		<input type="reset"  value="   Desegin   " id="desegin" >
-	
-	
 	</form>
 	</div>
     </section>
@@ -56,34 +51,38 @@
 </html>
 
 <?php
-	if(isset($_POST['email'])){
+	if(isset($_POST['pass1'])){
 		include 'configEzarri.php';
-		if($_SESSION['gaizkiKont']<3 || !isset($_SESSION['gaizkiKont'])){
-			$email=trim($_POST['email']);
-			$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
-			if(mysqli_num_rows($erab)!=1){
-				echo "<script>alert('LogIn-a ez da zuzena.')</script>";
-				$_SESSION['gaizkiKont']=$_SESSION['gaizkiKont']+1;
-			}else{
-				$row= mysqli_fetch_array($erab, MYSQLI_ASSOC);
-				if(crypt($_POST['pass'],'Lkwm8z5/') == $row['pass']){
-					echo "<script>
-							alert('Ongi etorri!');
-							window.location.href='layout.php';
-						</script>";
-					$_SESSION['email']=$email;
-					$_SESSION['gaizkiKont']=0;
+		if($_POST['pass1'] == $_POST['pass2']){
+			$pasahitza = crypt($_POST['pass1'],'Lkwm8z5/');
+			$aurk=FALSE;
+			$file = fopen("../txt/toppasswords.txt", "r");
+			while(!feof($file) && !$aurk){
+				if(trim(fgets($file)) == $_POST['pass1']){
+					$aurk=TRUE;
+				}
+			}
+			fclose($file);
+			if($aurk==TRUE){
+					$seg=FALSE;
+					echo "<script>alert('Pasahitza ez da segurua!');</script>";
+			}else if($aurk==FALSE){
+					$seg=TRUE;
+			}
+			if($seg){
+				$ema = mysqli_query($link, "UPDATE erabiltzaileak SET pass='$pasahitza' WHERE email='$_GET[email]'");
+				if(!$ema){
+					echo "Errorea query-a gauzatzerakoan: ' . mysqli_error($link);";
+					die();
 				}else{
-					echo "<script>alert('LogIn-a ez da zuzena.')</script>";
-					$_SESSION['gaizkiKont']=$_SESSION['gaizkiKont']+1;
+					echo "<script>
+							alert('Pasahitza eguneratu da datu basean!');
+							window.location.href='logIn.php';
+						</script>";
 				}
 			}
 		}else{
-			$_SESSION['gaizkiKont']=0;
-			echo "<script>
-					alert('Hiru aldiz sahiatzeagatik sesioa blokeatu zaizu.');
-					window.location.href='layout.php';
-				</script>";
+			echo "<script>alert('Pasahitzak ez dute kointziditzen.')</script>";
 		}
 	}
 	if(isset($_SESSION['email'])){
