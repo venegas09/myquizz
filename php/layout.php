@@ -1,5 +1,5 @@
+<?php session_start()?>
 <!DOCTYPE html>
-<?php session_start() ?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -31,6 +31,7 @@
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.php'>Hasiera</a></span>
 		<?php
+			$_SESSION['gaizkiKont']=0;
 			if(isset($_SESSION['email'])){
 				if($_SESSION['email']=="web000@ehu.es"){
 					echo "<span><a href='reviewingQuizes.php'>Galderak Berrikusi</a></span>";

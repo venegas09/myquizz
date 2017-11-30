@@ -1,0 +1,1 @@
+Hasieran errekuperazioko galdera bat egitea pentsatu genuen baina konplexuegia zenez (datu baseak aldatu, signUp aldatu...) nick-a galdetzea bakarrik erabaki genuen, hau da, "Pasahitza ahaztu duzu?" link-an clik egitean eposta eta dagokion nick-a eskatuko dizu eta ondo daudenean pasahitza aldatzen utziko dizu.
