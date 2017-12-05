@@ -3,7 +3,7 @@
 	if($local == 0){
 		$zerbitzaria = "localhost";
 		$erabiltzailea = "root";
-		$gakoa = "";
+		$gakoa = "admin";
 		$db = "quiz";
 	}else{
 		$zerbitzaria = "localhost";
