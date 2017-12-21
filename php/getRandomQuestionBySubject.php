@@ -1,17 +1,26 @@
 <?php
 session_start();
 include 'configEzarri.php';
-if(empty($_SESSION['galderak'])){
+
+if(!isset($_SESSION[$_POST['arloa']])){
+	$ema=mysqli_query($link, "SELECT id FROM questions WHERE arloa='$_POST[arloa]'");
+	$id = array();
+	while($row= mysqli_fetch_array($ema, MYSQLI_ASSOC)){
+		$id[]=$row['id'];
+	}
+	$_SESSION[$_POST['arloa']]=$id;
+}
+if(empty($_SESSION[$_POST['arloa']])){
 	echo "BUKATU";
 }else{
-	$id=$_SESSION['galderak'];
+	$id=$_SESSION[$_POST['arloa']];
 	shuffle($id);
 	$galdera=mysqli_query($link,"SELECT * FROM questions WHERE id='$id[0]'");
 	$row= mysqli_fetch_array($galdera, MYSQLI_ASSOC);
 	$erantzunak=array($row['zuzena'],$row['okerra1'],$row['okerra2'],$row['okerra3']);
 	$_SESSION['id']=$id[0];
 	/*unset($id[0]);
-		$_SESSION['galderak']=$id;
+		$_SESSION[$_POST['arloa']]=$id;
 	*/
 	shuffle($erantzunak);
 	echo "

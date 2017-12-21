@@ -48,7 +48,7 @@ if(isset($_SESSION['email'])){
 				}
 			}else{
 				echo "<span><a href='onePlay.php'>OnePlay</a></span>
-						<span><a href='playBySubject.php'>Play By Subject</a></span>
+						<span><a href='playingBySubject.php'>Play By Subject</a></span>
 						<span><a href='ranking.php'>Ranking</a></span>";		
 			}
 		?>
