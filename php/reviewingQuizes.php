@@ -1,4 +1,15 @@
-<?php session_start()?>
+<?php 
+session_start();
+if(isset($_SESSION['email']) && ($_SESSION['email']!="web000@ehu.es")){
+	echo "<script>
+			window.location.href='layout.php';
+		</script>";
+}else if(!isset($_SESSION['email'])){
+	echo "<script>
+			window.location.href='logIn.php';
+		</script>";
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -56,6 +67,26 @@
 			document.getElementById("id").value=idbalioa.innerHTML;
 		}
 	</script>
+		<script type="text/javascript" language = "javascript">
+		xhro3 = new XMLHttpRequest();
+		xhro3.onreadystatechange=function(){
+			if (xhro3.readyState==4 && xhro3.status==200){
+				///document.getElementById("galderatxer").innerHTML=xhro2.responseText;
+				alert(xhro3.responseText);
+				window.location.href='reviewingQuizes.php';
+			}
+		}
+		function ezabatu(object){
+			var id= object.id;	
+			var r = confirm(object.id+". galdera ezabatu nahi duzu?");
+			if(r==true){
+				xhro3.open("POST", "galderaEzabatu.php" , true);
+				xhro3.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xhro3.send("id="+id);
+			}
+		}
+		
+	</script>
 	<link rel='stylesheet' type='text/css' href='../stylesPWS/styleAddQuestions.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -111,7 +142,7 @@
 		;
 		while($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)){		
 			echo 
-				'<tr class="filak">
+				'<tr id='. $row['id'].' class="filak">
 					<td class="idak" onMouseOver="mano(this)" onMouseOut="mano2(this)" onclick="aukeratu(this)">'.$row['id'].'</td> 
 					<td>'.$row['email'].'</td> 
 					<td>'.$row['galdera'].'</td>
@@ -123,12 +154,14 @@
 					<td>'.$row['arloa'].'</td>'
 			;
 			if($row['imgInp']){
-				echo '<th><img width="100" src="data:image/png;base64,'.base64_encode($row['imgInp']).'"></th>
+				echo '<td><img width="100" src="data:image/png;base64,'.base64_encode($row['imgInp']).'"></td>
+					  <td><img src="../irudiak/basura.png" width="40" onMouseOver="mano(this)" onMouseOut="mano2(this)" onclick="aukeratu(this);ezabatu(this.parentElement.parentElement);" ></td>
 					</tr>
 					</center>'
 				;
 			}else{
-				echo '<th><img src="../irudiak/noimg.png" width="100"></th>
+				echo '<td><img src="../irudiak/noimg.png" width="100"></td>
+					  <td><img src="../irudiak/basura.png" width="40" onMouseOver="mano(this)" onMouseOut="mano2(this)" onclick="aukeratu(this);ezabatu(this.parentElement.parentElement);" ></td>
 					</tr>
 					</center>'
 				;
@@ -139,16 +172,3 @@
 	</div>
 </body>
 </html>
-		
-
-<?php
-	if(isset($_SESSION['email']) && ($_SESSION['email']!="web000@ehu.es")){
-		echo "<script>
-				window.location.href='layout.php';
-			</script>";
-	}else if(!isset($_SESSION['email'])){
-		echo "<script>
-				window.location.href='logIn.php';
-			</script>";
-	}
-?>

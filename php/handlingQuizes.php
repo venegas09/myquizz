@@ -1,4 +1,17 @@
-<?php session_start()?>
+<?php 
+session_start();
+if($_SESSION['email']=="web000@ehu.es"){
+	echo "<script>
+			window.location.href='layout.php';
+		</script>";
+}else if(!isset($_SESSION['email'])){
+	echo "<script>
+			window.location.href='logIn.php';
+		</script>";
+}else{
+	echo $_SESSION['email'];
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>

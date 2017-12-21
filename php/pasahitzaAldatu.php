@@ -1,4 +1,13 @@
-<?php session_start()?>
+<?php 
+session_start();
+if(isset($_SESSION['email'])){
+	echo "<script>
+			window.location.href='layout.php';
+		</script>";
+}else{
+	echo "anonimoa";
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -70,10 +79,5 @@
 				echo "<script>alert('Datuak ez dute kointziditzen.')</script>";
 			}
 		}
-	}
-	if(isset($_SESSION['email'])){
-		echo "<script>
-				window.location.href='layout.php';
-			</script>";
 	}
 ?>

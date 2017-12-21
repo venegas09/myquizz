@@ -1,4 +1,11 @@
-<?php session_start()?>
+<?php 
+session_start();
+if(isset($_SESSION['email'])){
+	echo $_SESSION['email'];
+}else{
+	echo "anonimoa";
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -36,9 +43,13 @@
 				if($_SESSION['email']=="web000@ehu.es"){
 					echo "<span><a href='reviewingQuizes.php'>Galderak Berrikusi</a></span>";
 				}else{
-					echo "<span><a href='handlingQuizes.php'>HANDLING QUIZES</a></span>
+					echo "<span><a href='handlingQuizes.php'>Handling Quizes</a></span>
 						<span><a href='showQuestionsWithImages.php'>Galderak ikusi</a></span>";	
 				}
+			}else{
+				echo "<span><a href='onePlay.php'>OnePlay</a></span>
+						<span><a href='playBySubject.php'>Play By Subject</a></span>
+						<span><a href='ranking.php'>Ranking</a></span>";		
 			}
 		?>
 		<span><a href="credits.php">Kredituak</a></span>

@@ -1,4 +1,13 @@
-<?php session_start()?>
+<?php 
+session_start();
+if(isset($_SESSION['email'])){
+	echo "<script>
+			window.location.href='layout.php';
+		</script>";
+}else{
+	echo "anonimoa";
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -53,7 +62,7 @@
 			});
 		});
 	</script>
-		<script>
+	<script>
 		xhro2 = new XMLHttpRequest();
 		var botoiAc2;
 		xhro2.onreadystatechange = function(){
@@ -142,17 +151,17 @@ if(isset($_POST['email'])){
 		$deitura=trim($_POST['deitura']);
 		$nick=trim($_POST['nick']);
 		$pasahitza =crypt($_POST['pass'],'Lkwm8z5/');
-		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE email='$email'");
+		$erab = mysqli_query($link, "SELECT * FROM erabiltzaileak WHERE eposta='$eposta'");
 		if(mysqli_num_rows($erab)>0){
 			echo "<script>alert('Adierazitako email-a dagoeneko existitzen da. Beste bat aukeratu.')</script>";
 		}else{
-			if($_FILES['imgInp']['error']){
+			if($_FILES['img']['error']){
 				$irudia = 0;
 			}else{
-				$irudia = addslashes(file_get_contents($_FILES['imgInp']['tmp_name']));
+				$irudia = addslashes(file_get_contents($_FILES['img']['tmp_name']));
 			}
 			$sql="INSERT INTO erabiltzaileak(email,deitura,nick,pass,imgInp)
-				VALUES ('$email', '$deitura', '$nick', '$pasahitza', '$irudia')";
+				VALUES ('$eposta', '$deitura', '$nick', '$pasahitza', '$irudia')";
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "<script>alert('Errorea query-a gauzatzerakoan: ' . mysqli_error($link))</script>";
@@ -165,11 +174,5 @@ if(isset($_POST['email'])){
 			}
 		}
 }
-	
-	if(isset($_SESSION['email'])){
-		echo "<script>
-				window.location.href='layout.php';
-			</script>";
-	}
 ?>
 
