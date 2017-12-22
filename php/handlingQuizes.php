@@ -9,8 +9,8 @@ if($_SESSION['email']=="web000@ehu.es"){
 			window.location.href='logIn.php';
 		</script>";
 }else{
-	echo $_SESSION['email'];
-}
+	echo ("&nbsp;". $_SESSION['email']);
+}	
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,9 +1,9 @@
 <?php
 session_start();
 if(isset($_SESSION['email'])){
-	echo $_SESSION['email'];
+	echo ("&nbsp;". $_SESSION['email']);
 }else{
-	echo"anonimoa";
+	echo"&nbsp;Ez logeatuta";
 }	
 ?>
 <!DOCTYPE html>

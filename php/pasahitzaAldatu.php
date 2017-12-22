@@ -5,7 +5,7 @@ if(isset($_SESSION['email'])){
 			window.location.href='layout.php';
 		</script>";
 }else{
-	echo "anonimoa";
+	echo"&nbsp;Ez logeatuta";
 }
 ?>
 <!DOCTYPE html>

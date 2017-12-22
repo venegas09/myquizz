@@ -5,7 +5,7 @@ if(isset($_SESSION['email'])){
 			window.location.href='layout.php';
 		</script>";
 }else{
-	echo "anonimoa";
+	echo"&nbsp;Ez logeatuta";
 }
 if(!isset($_SESSION['galderak'])){
 	include 'configEzarri.php';
@@ -14,8 +14,9 @@ if(!isset($_SESSION['galderak'])){
 	while($row= mysqli_fetch_array($ema, MYSQLI_ASSOC)){
 		$id[]=$row['id'];
 	}
-	$_SESSION['galderak']=$id;
+	$_SESSION['galderak']=$id;	
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,8 +40,14 @@ if(!isset($_SESSION['galderak'])){
 	
 	<script>
 		function hasieratu(){
-			var info= '<p>Hasi botoia sakatzean galdera bat agertuko zaizu, ondo erantzutean galderaren zailtasuna gehituko zaizu puntuaziora, aldiz gaizki erantzutean puntu bat kenduko zaizu. Ondoren galdera gehiago erantzuteko aukera emango zaizu.</p>'
-			document.getElementById("edukia").innerHTML=info+'<br/><input type="button" onclick="galderaBerria();" value="    Hasi    ">';
+			var info= '<p>Hasi botoia sakatzean galdera bat agertuko zaizu, ondo erantzutean galderaren zailtasuna gehituko zaizu puntuaziora, aldiz gaizki erantzutean galderaren zailtasuna kenduko zaizu. Ondoren galdera gehiago erantzuteko aukera emango zaizu.</p>'
+			document.getElementById("edukia").innerHTML=info+'</br><input type="text" id="nicka" value=""><br/><input type="button" onclick="galderaBerria();" value="    Hasi    ">';
+		}
+	</script>
+	<script>
+		function hasieratu2(){
+			var info= '<p>Hasi botoia sakatzean galdera bat agertuko zaizu, ondo erantzutean galderaren zailtasuna gehituko zaizu puntuaziora, aldiz gaizki erantzutean galderaren zailtasuna kenduko zaizu. Ondoren galdera gehiago erantzuteko aukera emango zaizu.</p>'
+			document.getElementById("edukia").innerHTML=info+'<br/><input type="button" onclick="galderaBerria2();" value="    Hasi    ">';
 		}
 	</script>
 	<script>
@@ -56,14 +63,71 @@ if(!isset($_SESSION['galderak'])){
 		}
 		
 		function galderaBerria(){
-			xhro1.open("POST", 'getRandomQuestion.php', true);
-			xhro1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			xhro1.send();
+			var jokalaria=document.getElementById("nicka").value;
+			if(jokalaria.length<=3){
+				alert("3 baino karaktere gehiago duen nick bat erabili behar duzu.");
+			}else{
+				xhro1.open("POST", 'getRandomQuestion.php', true);
+				xhro1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xhro1.send("nicka="+jokalaria);
+			}
 		}
 	</script>
-
+	<script>
+		xhro3 = new XMLHttpRequest();
+		xhro3.onreadystatechange = function(){
+			if ((xhro3.readyState==4)&&(xhro3.status==200 )){
+				if(xhro3.responseText=="BUKATU"){
+					document.getElementById("edukia").innerHTML="Galdera guztiak bukatu dira!";
+				}else{
+					document.getElementById("edukia").innerHTML=xhro3.responseText;
+				}
+			} 
+		}
+		
+		function galderaBerria2(){
+			xhro3.open("POST", 'getRandomQuestion.php', true);
+			xhro3.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhro3.send();
+		}
+	</script>
+	
+	<script>
+			xhro2 = new XMLHttpRequest();
+			
+			xhro2.onreadystatechange = function(){
+				if ((xhro2.readyState==4)&&(xhro2.status==200 )){ 	
+					var erantzun = xhro2.responseText;
+					var hurrengoa = "<br/><input type='button' onclick='galderaBerria2();' value='  Hurrengo galdera  '>";
+					if(parseInt(erantzun)>0){
+						document.getElementById('edukia').innerHTML='Ondo erantzun duzu! Zure puntuazioa '+erantzun+' puntu igo da<br/>'+hurrengoa;
+					}else if(parseInt(erantzun)<0){
+						document.getElementById('edukia').innerHTML='Gaizki erantzun duzu... Zure puntuazioa '+erantzun+' jeitsi da.'+hurrengoa;
+					}
+					
+				}
+			}	
+			function konprobatu(){
+				var erantzuna="";
+				var erantzunaBilatu=document.getElementsByName("erantzuna");
+				for(var i=0;i<erantzunaBilatu.length;i++)
+					{
+						if(erantzunaBilatu[i].checked)
+						erantzuna=erantzunaBilatu[i].value;
+					}
+				xhro2.open('POST', 'konprobatuErantzuna.php', true);
+				xhro2.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+				xhro2.send("erantzuna="+erantzuna);
+			}
+		</script>
   </head>
-  <body onLoad="hasieratu();">
+  <?php
+  if(!isset($_SESSION['nicka'])){
+	echo("<body onLoad='hasieratu();'>");
+}else{
+	echo("<body onLoad='hasieratu2();'>");
+}
+?>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
 	<h2>One Play</h2>
