@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'configEzarri.php';
+if(!isset($_SESSION['nicka'])){
+	$_SESSION['nicka']=$_POST['nicka'];
+}
 if(empty($_SESSION['galderak'])){
 	echo "BUKATU";
 }else{
@@ -10,9 +13,8 @@ if(empty($_SESSION['galderak'])){
 	$row= mysqli_fetch_array($galdera, MYSQLI_ASSOC);
 	$erantzunak=array($row['zuzena'],$row['okerra1'],$row['okerra2'],$row['okerra3']);
 	$_SESSION['id']=$id[0];
-	/*unset($id[0]);
-		$_SESSION['galderak']=$id;
-	*/
+	unset($id[0]);
+	$_SESSION['galderak']=$id;
 	shuffle($erantzunak);
 	echo "
 			<center>";
@@ -21,37 +23,16 @@ if(empty($_SESSION['galderak'])){
 				}else{
 					echo '<img src="../irudiak/noimg.png" width="100">';
 				}
-			echo"</center>
-			<p><b>Arloa:</b>". $row['arloa'] . "&nbsp;&nbsp;<b>Zailtasuna:</b>". $row['zail'] ."</p><br/>
+			echo"
+			</center>
+			<p><b>Arloa:</b>&nbsp;" . $row['arloa'] . "&nbsp;&nbsp;<b>Zailtasuna:</b>&nbsp;" . $row['zail'] ."</p><br/>
 			<p>". $row['galdera'] ."</p><br/>
 			  <input type='radio' name='erantzuna' id='erantzuna1' value='$erantzunak[0]' checked> ".$erantzunak[0]."<br/>
 			  <input type='radio' name='erantzuna' id='erantzuna2' value='$erantzunak[1]'> ".$erantzunak[1]."<br/>
 			  <input type='radio' name='erantzuna' id='erantzuna3' value='$erantzunak[2]'> ".$erantzunak[2]."<br/>
 			  <input type='radio' name='erantzuna' id='erantzuna4' value='$erantzunak[3]'> ".$erantzunak[3]."<br/><br/>
 			  <input type='button' id='konprobatu' onclick='konprobatu();' value='Konprobatu'>
-			<script>
-			xhro2 = new XMLHttpRequest();
 			
-			xhro2.onreadystatechange = function(){
-				if ((xhro2.readyState==4)&&(xhro2.status==200 )){ 
-					var erantzuna = xhro2.responseText;
-					var hurrengoa = '<br/><input type='button' onclick='galderaBerria();' value='  Hurrengo galdera  '>';
-					if(erantzuna=='ONDO'){
-						document.getElementById('edukia').innerHTML='Ondo erantzun duzu!<br/>'+hurrengoa;
-					}else if(erantzuna=='GAIZKI'){
-						document.getElementById('edukia').innerHTML='Gaizki erantzun duzu...'+hurrengoa;
-					}
-					
-				}
-			}
-			
-			function konprobatu(){
-				alert('asasasddsadas');
-				xhro2.open('POST', 'konprobatuErantzuna.php', true);
-				xhro2.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-				xhro2.send('erantzuna='+$('input[name=erantzuna]:checked', '#galderaF').val());
-			}
-			</script>
 		";
 }
 ?>

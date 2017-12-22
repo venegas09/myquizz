@@ -5,7 +5,7 @@ if(isset($_SESSION['email'])){
 			window.location.href='layout.php';
 		</script>";
 }else{
-	echo "anonimoa";
+	echo"&nbsp;Ez logeatuta";
 }
 ?>
 <!DOCTYPE html>
@@ -126,7 +126,7 @@ if(isset($_SESSION['email'])){
 		<br><br>
 		
 		Perfil irudia<br><input type="file" id="imgInp" name="imgInp" accept="image/*"><br><br>
-		<img id="img" src="#" width="100" height="100" alt="" /><br><br>
+		<img id="img" name="img" src="#" width="100" height="100" alt="" /><br><br>
 		<input type="submit"  value="   Bidali   " id="submit" disabled>
 		<input type="reset"  value="   Desegin   " id="desegin" onclick="loadFile(event)">
 	
@@ -147,7 +147,7 @@ if(isset($_SESSION['email'])){
 <?php
 if(isset($_POST['email'])){
 		include 'configEzarri.php';
-		$email=trim($_POST['email']);
+		$eposta=trim($_POST['email']);
 		$deitura=trim($_POST['deitura']);
 		$nick=trim($_POST['nick']);
 		$pasahitza =crypt($_POST['pass'],'Lkwm8z5/');

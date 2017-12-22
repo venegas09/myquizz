@@ -1,9 +1,9 @@
 <?php 
 session_start();
 if(isset($_SESSION['email'])){
-	echo $_SESSION['email'];
+	echo ("&nbsp;". $_SESSION['email']);
 }else{
-	echo "anonimoa";
+	echo"&nbsp;Ez logeatuta";
 }
 ?>
 <!DOCTYPE html>
@@ -20,8 +20,21 @@ if(isset($_SESSION['email'])){
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+		  <style>
+			section{
+				height:300px;
+			}nav{
+				height:300px;
+			}
+		  </style>
+		  <script>
+			function tamainaAldatu(){
+				alert(document.getElementById("n1").style.height.value);
+				alert(document.getElementById("s1").style.height.value);
+			}
+		  </script>
   </head>
-  <body>
+  <body >
   <div id='page-wrap'>
 	<header class='main' id='menu'>
 	<?php
@@ -33,7 +46,7 @@ if(isset($_SESSION['email'])){
 		}
 	?>
 	<h2>Galdetegia: galdera eroak</h2>
-
+	
     </header>
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.php'>Hasiera</a></span>
@@ -58,7 +71,33 @@ if(isset($_SESSION['email'])){
     
 	
 	<div>
-	Quizzes and credits will be displayed in this spot in future laboratories ...
+		<?php
+		echo("10 jokalari hoberenak:");
+		include 'configEzarri.php';
+		$ema = mysqli_query($link, "SELECT * FROM jokalariak ORDER BY puntuak DESC");
+		$zenbat=1;
+		echo '
+			<center>
+			<table border = "1" id=taula>
+			<tr>
+				<th>POSTUA</th>
+				<th>NICK</th>
+				<th>PUNTUAK</th>
+			</tr>'
+		;
+		while(($row=mysqli_fetch_array($ema, MYSQLI_ASSOC)) && $zenbat<=10){		
+			echo 
+				'<tr>
+					<td>'.$zenbat.'</td> 
+					<td>'.$row['nick'].'</td> 
+					<td>'.$row['puntuak'].'</td>	
+				</tr>
+				</center>';
+			$zenbat=$zenbat+1;
+		}
+		echo("</table>");
+		mysqli_free_result($ema);
+	?>
 	</div>
     </section>
 	<footer class='main' id='f1'>
